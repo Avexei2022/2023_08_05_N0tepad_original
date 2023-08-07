@@ -1,4 +1,5 @@
-from view.commands import Add_note, Exit, Print_all_notes, Print_list_notes, Print_note
+from view.commands import Add_note, Exit, Print_all_notes
+from view.commands import Print_list_notes, Print_note, Filter_date
 
 
 
@@ -10,12 +11,14 @@ class Menu:
         self.print_list_notes = Print_list_notes.Print_list_notes(
             consoleUI=consoleUI)
         self.print_note = Print_note.Print_note(consoleUI=consoleUI)
+        self.filter_date = Filter_date.Filter_date(consoleUI=consoleUI)
         self.exit = Exit.Exit(consoleUI=consoleUI)
         self.commandList = []
         self.commandList.append(self.add_note)
         self.commandList.append(self.print_all_notes)
         self.commandList.append(self.print_list_notes)
         self.commandList.append(self.print_note)
+        self.commandList.append(self.filter_date)
         self.commandList.append(self.exit)
 
     def printMenu(self) -> str:

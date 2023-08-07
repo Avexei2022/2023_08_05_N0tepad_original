@@ -37,9 +37,9 @@ class Note(object):
         return note.id + ';' + note.title + ';' + note.body + ';' + note.date
 
     def note_full_info(self, note):
-        return '\nID заметки: ' + note.id + '\n' + 'Дата и время записи: ' + note.date + '\n' + 'Заголовок: ' + note.title + '\n' + 'Текст заметки: ' + note.body
+        return '\nID: ' + note.id + ', Дата и время: ' + note.date + '\n' + 'Заголовок: ' + note.title + '\n' + 'Текст заметки: ' + note.body
 
     def note_title_info(self, note):
-        return '\nID заметки: ' + note.id + '\n' + 'Дата и время записи: ' + note.date + '\n' + 'Заголовок: ' + note.title
+        return '\nID: ' + note.id  + ', Дата и время: ' + note.date + ', Заголовок: ' + note.title
     
 

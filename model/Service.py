@@ -41,6 +41,8 @@ class Service:
     def print_notes(self, choice):
         flag = True
         array = self.get_array_from_file()
+        if choice == 'date':
+            date = input('\nВведите дату (dd.mm.yyyy): ')
         for item in array:
             if choice == 'all':
                 flag = False
@@ -53,9 +55,8 @@ class Service:
                 print('ID: ' + self.note.get_id(item))
             if choice == 'date':
                 flag = False
-                date = input('Введите дату (dd.mm.yyyy): ')
                 if date in self.note.get_date(item):
-                    print(self.note.note_info(item))
+                    print(self.note.note_full_info(item))
         if flag:
             print('Данные отсутствуют')
 
