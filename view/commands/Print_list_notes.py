@@ -4,7 +4,7 @@ from view.commands import Command
 class Print_list_notes(Command.Command):
     def __init__(self, consoleUI):
         super()
-        self.description = "Показать список заметок"
+        self.description = "Показать список заметок (сортировка по дате)"
         self.consoleUI = consoleUI
 
     def execute(self):
