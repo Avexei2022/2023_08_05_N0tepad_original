@@ -60,8 +60,8 @@ class ConsoleUI(View.View):
     def add_note(self):
         self.service.add_note()
 
-    def action_byId(self, action):
-        self.service.action_byId(action)
+    def action_byId(self):
+        self.service.action_byId()
 
     def finish(self):
         print("\nЗАМЕТКИ. Программа закрыта.\n")

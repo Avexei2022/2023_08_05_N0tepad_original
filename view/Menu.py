@@ -1,5 +1,5 @@
-from view.commands import Add_note, Exit, Print_all_notes
-from view.commands import Print_list_notes, Print_note, Filter_date
+from view.commands import Add_note, Exit, Print_all_notes, Print_list_notes, Print_note
+from view.commands import Filter_date
 
 
 
