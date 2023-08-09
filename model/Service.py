@@ -1,5 +1,5 @@
 from model import File_operator, Note
-import view.ConsoleUI as ConsoleUI
+
 
 class Service:
 
@@ -16,7 +16,7 @@ class Service:
                 f'Минимальный количество символов в тексте: {self.min_text_length}\n')
             text = input('Введите текст: ')
         else:
-            return text
+            return text.replace(";" ,",")
 
     def add_note(self):
         title = self.check_len_text_input(input('\nВведите название заметки: '))
@@ -42,7 +42,7 @@ class Service:
         flag = True
         array = self.get_array_from_file()
         if choice == 'date':
-            date = input('\nВведите дату (dd.mm.yyyy): ')
+            date = input('\nВведите дату (yyyy.mm.dd): ')
         for item in array:
             if choice == 'all':
                 flag = False
@@ -50,38 +50,43 @@ class Service:
             if choice == 'list':
                 flag = False
                 print(self.note.note_title_info(item))
-            if choice == 'id':
-                flag = False
-                print('ID: ' + self.note.get_id(item))
             if choice == 'date':
-                flag = False
-                if date in self.note.get_date(item):
-                    print(self.note.note_full_info(item))
+                if date == self.note.get_date(item)[:10]:
+                    flag = False
+                    print(self.note.note_title_info(item))
         if flag:
-            print('Данные отсутствуют')
+            print('\nДанные отсутствуют')
+        elif choice == 'date':
+            self.action_byId()
 
 
-    def action_byId(self, action):
-        id = input('\nВведите id заметки: ')
+    def action_byId(self):
+        id = input('\nДля чтения, редактирования или удаления введите id заметки: ')
         array = self.get_array_from_file()
         flag = True
+        flag2 = True
         for item in array:
             if id == self.note.get_id(item):
                 flag = False
-                if action == 'edit':
-                    note = ConsoleUI.ConsoleUI.create_note(self.num)
-                    self.note.set_title(item, note.get_title())
-                    self.note.set_body(item, note.get_body())
+                print(self.note.note_full_info(item))
+                print("\nОперации с заметкой:\n1. Редактировать текст заметки.\n2. Удалить заметку.\n" +
+                          "Для перехода к начальному меню введите любой другой символ.\n")
+                input_text = ""
+                input_text = input(
+                            "Введите символ необходимой операции: ").strip()
+                if input_text == "1":
+                    body = self.check_len_text_input(input('\nВведите новый текст заметки: '))
+                    self.note.set_body(item, body.replace(";", ","))
                     self.note.set_date(item)
-                    print('Заметка изменена.')
-                if action == 'print':
-                    print(self.note.note_full_info(item))
-                if action == 'delete':
+                    print('\nЗаметка изменена.')
+                elif input_text == "2":
                     array.remove(item)
-                    print('Заметка удалена.')
+                    print('\nЗаметка удалена.')
+                else:
+                    flag2 = False
         if flag:
-            print('Данные отсутствуют')
-        if action != 'print':
+            print('\nДанные отсутствуют')
+        if flag2:
             self.file_operator.write_file(array, 'a')
 
     def sort_by_date(self, note):
