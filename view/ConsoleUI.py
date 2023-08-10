@@ -1,9 +1,9 @@
 from presenter import Presenter
-from view import Menu, View
+from view import Menu
 import re
 
 
-class ConsoleUI(View.View):
+class ConsoleUI():
     
     def __init__(self):
         self.presenter = Presenter.Presenter()
@@ -52,8 +52,7 @@ class ConsoleUI(View.View):
             print(
                 f'Минимальный количество символов в тексте: {self.min_text_length}\n')
             text = input('Введите текст: ')
-        else:
-            return text.replace(";", ",")
+        return text.replace(";", ",")
 
     def add_note(self):
         title = self.check_len_text_input(
@@ -67,11 +66,14 @@ class ConsoleUI(View.View):
     def action_byId(self):
         self.presenter.action_byId()
 
-    def finish(self):
-        print("\nЗАМЕТКИ. Программа закрыта.\n")
-
+    def get_body(self) -> str:
+        return self.check_len_text_input(input('\nВведите новый текст заметки: '))
+    
     def printAnswer(self, text):
         print(text)
 
     def dialog(self, text_out) -> str:
         return input(text_out)
+    
+    def finish(self):
+        print("\nЗАМЕТКИ. Программа закрыта.\n")

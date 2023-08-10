@@ -28,31 +28,33 @@ class Service:
 
 
     def print_notes(self, choice):
+        presenter = Presenter.Presenter()
         flag = True
         array = self.get_array_from_file()
         if choice == 'date':
-            date = Presenter.Presenter().dialog('\nВведите дату (yyyy.mm.dd): ')
+            date = presenter.dialog('\nВведите дату (yyyy.mm.dd): ')
         for item in array:
             if choice == 'all':
                 flag = False
-                Presenter.Presenter().printAnswer(self.note.note_full_info(item))
+                presenter.printAnswer(self.note.note_full_info(item))
             if choice == 'list':
                 flag = False
-                Presenter.Presenter().printAnswer(
+                presenter.printAnswer(
                     self.note.note_title_info(item))
             if choice == 'date':
                 if date == self.note.get_date(item)[:10]:
                     flag = False
-                    Presenter.Presenter().printAnswer(
+                    presenter.printAnswer(
                         self.note.note_title_info(item))
         if flag:
-            Presenter.Presenter().printAnswer('\nДанные отсутствуют')
+            presenter.printAnswer('\nДанные отсутствуют')
         elif choice == 'date':
             self.action_byId()
 
 
     def action_byId(self):
-        id = Presenter.Presenter().dialog(
+        presenter = Presenter.Presenter()
+        id = presenter.dialog(
             '\nДля чтения, редактирования или удаления введите id заметки: ')
         array = self.get_array_from_file()
         flag = True
@@ -60,27 +62,26 @@ class Service:
         for item in array:
             if id == self.note.get_id(item):
                 flag = False
-                Presenter.Presenter().printAnswer(self.note.note_full_info(item))
-                Presenter.Presenter().printAnswer("\nОперации с заметкой:\n1. Редактировать текст заметки.\n2. Удалить заметку.\n" +
+                presenter.printAnswer(self.note.note_full_info(item))
+                presenter.printAnswer("\nОперации с заметкой:\n1. Редактировать текст заметки.\n2. Удалить заметку.\n" +
                           "Для перехода к начальному меню введите любой другой символ.\n")
                 input_text = ""
-                input_text = Presenter.Presenter().dialog(
+                input_text = presenter.dialog(
                             "Введите символ необходимой операции: ").strip()
                 if input_text == "1":
-                    body = self.check_len_text_input(
-                        Presenter.Presenter().dialog('\nВведите новый текст заметки: '))
+                    body = presenter.get_body()
                     self.note.set_body(item, body.replace(";", ","))
                     self.note.set_date(item)
-                    Presenter.Presenter().printAnswer(
+                    presenter.printAnswer(
                         self.note.note_full_info(item))
-                    Presenter.Presenter().printAnswer('\nТекст заметки изменен.')
+                    presenter.printAnswer('\nТекст заметки изменен.')
                 elif input_text == "2":
                     array.remove(item)
-                    Presenter.Presenter().printAnswer('\nЗаметка удалена.')
+                    presenter.printAnswer('\nЗаметка удалена.')
                 else:
                     flag2 = False
         if flag:
-            Presenter.Presenter().printAnswer('\nДанные отсутствуют')
+            presenter.printAnswer('\nДанные отсутствуют')
         if flag2:
             self.file_operator.write_file(array, 'a')
 
