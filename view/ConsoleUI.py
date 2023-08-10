@@ -1,17 +1,17 @@
-from model import Service
 from presenter import Presenter
-from view import Menu, View
+from view import Menu
 import re
 
 
-class ConsoleUI(View.View):
+class ConsoleUI():
     
     def __init__(self):
-        self.service = Service.Service()
-        # self.presenter = Presenter.
+        self.presenter = Presenter.Presenter()
         self.work = True
         user_string = ""
         self.menu = Menu.Menu(self)
+        self.min_text_length = 3
+        
         
     def start(self):
         print("\nПРОГРАММА ЗАМЕТКИ")
@@ -47,21 +47,33 @@ class ConsoleUI(View.View):
             self.inputError()
             return False
 
-    def check_len_text_input(self, text, n):
-        while len(text) <= n:
-            print(f'Текст должен содержать не менее {n} символов.\n')
+    def check_len_text_input(self, text):
+        while len(text) <= (self.min_text_length):
+            print(
+                f'Минимальный количество символов в тексте: {self.min_text_length}\n')
             text = input('Введите текст: ')
-        else:
-            return text
-
-    def print_notes(self, numCommand):
-        self.service.print_notes(numCommand)
+        return text.replace(";", ",")
 
     def add_note(self):
-        self.service.add_note()
+        title = self.check_len_text_input(
+        input('\nВведите название заметки: '))
+        body = self.check_len_text_input(input('\nВведите текст заметки: '))
+        self.presenter.add_note(title, body)
+
+    def print_notes(self, numCommand):
+        self.presenter.print_notes(numCommand)
 
     def action_byId(self):
-        self.service.action_byId()
+        self.presenter.action_byId()
 
+    def get_body(self) -> str:
+        return self.check_len_text_input(input('\nВведите новый текст заметки: '))
+    
+    def printAnswer(self, text):
+        print(text)
+
+    def dialog(self, text_out) -> str:
+        return input(text_out)
+    
     def finish(self):
         print("\nЗАМЕТКИ. Программа закрыта.\n")

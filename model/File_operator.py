@@ -1,4 +1,5 @@
 from model import Note
+from presenter import Presenter
 
 class File_operator:
 
@@ -28,18 +29,7 @@ class File_operator:
                     id=split_item[0], title=split_item[1], body=split_item[2], date=split_item[3])
                 array.append(note)
         except Exception:
-            print('Заметок нет')
+            Presenter.Presenter().printAnswer('Заметок нет')
         finally:
             return array
 
-
-    # def read_file(self):
-    #     array = []
-    #     file = open("notes.csv", "r", encoding='utf-8')
-    #     notes_string = file.read().strip().split("\n")
-    #     for item in notes_string:
-    #         split_item = item.split(';')
-    #         note = self.note_type(
-    #             id=split_item[0], title=split_item[1], body=split_item[2], date=split_item[3])
-    #         array.append(note)
-    #     return array
